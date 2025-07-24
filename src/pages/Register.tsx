@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface RegisterForm {
-  name: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  role: "admin" | "customer" | "vendor" ;
   email: string;
   password: string;
 }
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<RegisterForm>({
-    name: "",
+    firstName: "",
+    lastName: "",
+    phone:"",
+    role:"customer",
     email: "",
     password: "",
   });
@@ -24,13 +30,13 @@ const Register: React.FC = () => {
     e.preventDefault();
     setError(null);
 
-    if (!formData.name || !formData.email || !formData.password) {
+    if (!formData.firstName || !formData.email || !formData.password || !formData.lastName || !formData.phone) {
       setError("All fields are required");
       return;
     }
 
     try {
-      const res = await fetch("http://localhost:5000/auth/register", {
+      const res = await fetch("http://localhost:5000/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -61,10 +67,19 @@ const Register: React.FC = () => {
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         <input
-          name="name"
+          name="firstName"
           type="text"
-          placeholder="Full Name"
-          value={formData.name}
+          placeholder="First Name"
+          value={formData.firstName}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+
+        <input
+          name="lastName"
+          type="text"
+          placeholder="Last Name"
+          value={formData.lastName}
           onChange={handleChange}
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
@@ -74,6 +89,15 @@ const Register: React.FC = () => {
           name="email"
           placeholder="Email"
           value={formData.email}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={formData.phone}
           onChange={handleChange}
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../contexts/AuthContext";
 
 interface loginForm {
   email: string;
@@ -13,6 +13,7 @@ const Login: React.FC = () => {
     password: "",
   });
   const [error, setError] = useState<string | null>(null);
+  const {accessToken,login} = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +29,7 @@ const Login: React.FC = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/auth/login", {
+      const res = await fetch("http://localhost:5000/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -40,7 +41,7 @@ const Login: React.FC = () => {
         throw new Error(data.message || "Login Failed");
       }
 
-      localStorage.setItem("token", data.token);
+      login(data.token)
       navigate("/home");
     } catch (err: any) {
       setError(err.message);
