@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     password: "",
   });
   const [error, setError] = useState<string | null>(null);
-  const {accessToken,login} = useAuth();
+  const {login} = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,13 +23,15 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    console.log("Submit clicked")
+    console.log(formData)
 
     if (!formData.email || !formData.password) {
       setError("All fields are required");
     }
 
     try {
-      const res = await fetch("http://localhost:5000/auth/signin", {
+      const res = await fetch("http://localhost:3002/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

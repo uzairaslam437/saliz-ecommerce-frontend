@@ -29,6 +29,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({children}) 
     const login = (accessToken:string) => {
         setAccessToken(accessToken);
         localStorage.setItem('token',accessToken);
+        console.log(`Inside Auth context:${accessToken}`)
     }
 
     const logout = () => {
@@ -49,8 +50,8 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({children}) 
                 logout();
             }
             else{
-                localStorage.setItem('token',data.accessToken)
-                setAccessToken(data.accessToken)
+                localStorage.setItem('token',data.token)
+                setAccessToken(data.token)
             }
         }
         catch(err: any){
