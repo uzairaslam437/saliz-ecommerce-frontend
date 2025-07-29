@@ -24,7 +24,7 @@ const Navbar = () => {
             {/* Home */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link to="/" className="hover:text-blue-500">
+                <Link to="/home" className="hover:text-blue-500">
                   Home
                 </Link>
               </NavigationMenuLink>

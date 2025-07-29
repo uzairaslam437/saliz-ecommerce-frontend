@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 
 interface loginForm {
   email: string;
@@ -33,6 +33,7 @@ const Login: React.FC = () => {
     try {
       const res = await fetch("http://localhost:3002/auth/signin", {
         method: "POST",
+        credentials: 'include',  // ✅ Must be here to accept Set-Cookie header
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });

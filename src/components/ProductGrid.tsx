@@ -1,9 +1,8 @@
 import React,{useState,useEffect} from "react";
 import { ProductCard } from "./ProductCard";
 import type { ProductDetails } from "@/types/Product";
-import { useAuth } from "@/contexts/AuthContext";
 import { fetchAllProducts } from "@/services/ProductServices";
-
+import { useAuth } from "@/hooks/useAuth";
 
 export const ProductGrid: React.FC = () => {
     const [products,setProducts] = useState<ProductDetails[]>([]);
@@ -18,8 +17,7 @@ export const ProductGrid: React.FC = () => {
                     if(accessToken){
                         const allProducts = await fetchAllProducts(accessToken);
                         setProducts(allProducts);
-                        console.log(products);
-                    }
+                      }
                 }
                 catch(error){
                     console.log('Error fetching products',error)
@@ -35,12 +33,13 @@ export const ProductGrid: React.FC = () => {
         {products.map((product, index) => (
           <ProductCard 
             key={product.id}
+            id={product.id}
             imageUrl={product.imageUrl} 
             name={product.name} 
             rating={product.rating} 
             price={product.price} 
-          />
-        ))}
+          />)
+        )}
       </div>
     </div>
   );
