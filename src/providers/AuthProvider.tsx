@@ -5,8 +5,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [accessToken, setAccessToken] = useState<string | null>(() => localStorage.getItem("token"));
 
   useEffect(() => {
-    const interval = setInterval(refreshAccessToken, 1 * 60 * 1000);
-    return () => clearInterval(interval);
+    if(accessToken != null){
+      const interval = setInterval(refreshAccessToken, 14 * 60 * 1000);
+      return () => clearInterval(interval);
+    }
   }, [accessToken]);
 
   const login = (token: string) => {
